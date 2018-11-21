@@ -42,12 +42,3 @@ class LoginPage():
         self.enterPassword(password)
         self.clickLoginBtn()
 
-        # emailField = self.driver.find_element(By.ID, 'username')
-        # emailField.send_keys(email)
-        #
-        # passwordField = self.driver.find_element(By.ID, 'user_password')
-        # passwordField.send_keys(password)
-        #
-        # loginBtn = self.driver.find_element(By.NAME, 'commit')
-        # loginBtn.click()
-        #
