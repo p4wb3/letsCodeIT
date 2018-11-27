@@ -1,3 +1,5 @@
+from traceback import print_stack
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,7 +14,6 @@ class SeleniumDriver():
 
     def getByType(self,locatorType ):
         locatorType  = locatorType.lower()
-
         if locatorType=='id':
             return By.ID
         elif locatorType == 'xpath':
@@ -39,8 +40,26 @@ class SeleniumDriver():
         except:
             print('element not found')
         return element
-    def isElementPresent(self, locator,byType):
 
+    def clickElement(self,locator,locatorType='id'):
+        try:
+            element = self.getEltment(locator, locatorType)
+            element.click()
+            print('Clicked on element with locator: '+ locator + ' locatorType: '+ locatorType)
+        except:
+            print('Cannot click on elementwith locator: '+ locator + ' locatorType: '+ locatorType)
+            print_stack()
+
+    def sendKeys(self,data,locator,locatorType='id'):
+        try:
+            element = self.getEltment(locator, locatorType)
+            element.send_keys(data)
+            print('Sent data on element with locator: '+ locator + ' locatorType: '+ locatorType)
+        except:
+            print('Cannot send data on elementwith locator: '+ locator + ' locatorType: '+ locatorType)
+            print_stack()
+
+    def isElementPresent(self, locator,byType):
         try:
             element = self.driver.find_element(byType, locator)
             if element is not None:
@@ -52,11 +71,6 @@ class SeleniumDriver():
         except:
             print('element not found')
             return False
-
-    def clickElement(self,locator,locatorType='id'):
-        element = self.getEltment(locator, locatorType)
-        element.click()
-
 
     def elenentPresenceCheck(self,locator,byType):
         try:
@@ -71,7 +85,7 @@ class SeleniumDriver():
             print('element not found')
             return False
 
-    def ecpicitWait(self,locator,locatorType= 'id', timeout=10, pollFrequency= 0.5):
+    def expicitWait(self, locator, locatorType='id', timeout=10, pollFrequency= 0.5):
         element = None
         try:
             byType = self.getByType(locatorType)
@@ -81,7 +95,6 @@ class SeleniumDriver():
                                  ignored_exceptions=[NoSuchElementException,
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
-
             element = wait.until(EC.element_to_be_clickable((byType, locator)))
             print('Element appered on the web page')
         except:
@@ -89,15 +102,9 @@ class SeleniumDriver():
         return element
 
     def takeScreenshot(self):
-        """
-        Takes screenshot of the current open web page
-        :param driver
-        :return:
-        """
         fileName = str(round(time.time() * 1000)) + ".png"
         screenshotDirectory = 'F:\\letsCodeIt\\screenshots\\'
         destinationFile = screenshotDirectory + fileName
-
         try:
             self.driver.save_screenshot(destinationFile)
             print("Screenshot saved to directory --> :: " + destinationFile)
