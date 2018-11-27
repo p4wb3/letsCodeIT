@@ -20,11 +20,11 @@ class SeleniumDriver():
             return By.XPATH
         elif locatorType == 'name':
             return By.NAME
-        elif locatorType == 'linktext':
+        elif locatorType == 'link':
             return By.LINK_TEXT
         elif locatorType == 'css':
             return By.CSS_SELECTOR
-        elif locatorType == 'classname':
+        elif locatorType == 'class':
             return By.CLASS_NAME
         else:
             print('locator' +locatorType+ 'is not correct/suported')

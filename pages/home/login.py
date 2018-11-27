@@ -13,29 +13,33 @@ class LoginPage(SeleniumDriver):
     _password_field ='user_password'
     _login_btn = 'commit'
 
-    def getLoginLink(self):
-        return self.driver.find_element(By.LINK_TEXT, self._login_link)
-
-    def getEmailField(self):
-        return self.driver.find_element(By.ID, self._email_field)
-
-    def getPasswordField(self):
-        return  self.driver.find_element(By.ID, self._password_field)
-
-    def getLoginBtn(self):
-        return self.driver.find_element(By.NAME, self._login_btn)
+    # def getLoginLink(self):
+    #     return self.driver.find_element(By.LINK_TEXT, self._login_link)
+    #
+    # def getEmailField(self):
+    #     return self.driver.find_element(By.ID, self._email_field)
+    #
+    # def getPasswordField(self):
+    #     return  self.driver.find_element(By.ID, self._password_field)
+    #
+    # def getLoginBtn(self):
+    #     return self.driver.find_element(By.NAME, self._login_btn)
 
 
     def clickLoginlink(self):
-        self.getLoginLink().click()
+        self.clickElement(self._login_link, locatorType='link')
+
 
     def enterEmail(self,email):
-        self.getEmailField().send_keys(email)
+        self.sendKeys(email, self._email_field)
+
     def enterPassword(self, password):
-        self.getPasswordField().send_keys(password)
+        self.sendKeys(password,self._password_field)
+
 
     def clickLoginBtn(self):
-        self.getLoginBtn().click()
+        self.clickElement(self._login_btn, locatorType='name')
+
 
     def login(self, email, password):
         self.clickLoginlink()
